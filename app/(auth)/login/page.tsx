@@ -17,10 +17,12 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import Link from "next/link"
 import { loginAction } from "./actions/login.action"
+import { EyeIcon, EyeOffIcon } from "lucide-react"
 
 const LoginPage = () => {
   const router = useRouter()
   const [error, setError] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -31,18 +33,16 @@ const LoginPage = () => {
   })
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
-    console.log("submit")
     setError("")
     try {
       const response = await loginAction(values)
-      if(response.accessToken){
+      if (response.accessToken) {
         router.push("/dashboard")
       }
     } catch (err) {
       setError("Something went wrong")
     }
   }
-  
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-amber-50 p-4">
@@ -62,7 +62,7 @@ const LoginPage = () => {
                 <FormItem>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input placeholder="kminchelle" {...field} />
+                    <Input placeholder="johnDoe" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -75,7 +75,25 @@ const LoginPage = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="********" {...field} />
+                    <div className="relative">
+                      <Input
+                        type={showPassword ? "text" : "password"}
+                        placeholder="********"
+                        {...field}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                        tabIndex={-1}
+                      >
+                        {showPassword ? (
+                          <EyeOffIcon className="w-5 h-5" />
+                        ) : (
+                          <EyeIcon className="w-5 h-5" />
+                        )}
+                      </button>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -83,12 +101,6 @@ const LoginPage = () => {
             />
             <div className="flex flex-row items-center justify-between">
               <Button type="submit">Login</Button>
-              <Link
-                href="/register"
-                className="text-sm font-bold text-blue-500"
-              >
-                Register
-              </Link>
             </div>
           </form>
         </Form>

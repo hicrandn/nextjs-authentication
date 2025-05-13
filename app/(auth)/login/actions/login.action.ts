@@ -19,8 +19,12 @@ export const loginAction = async (formData: z.infer<typeof loginSchema>) => {
     }
 
     const data = await res.json()
+    console.log("Login successful:", data)
     const session = await getSession()
     session.token = data.accessToken
+    session.firstName = data.firstName
+    session.lastName = data.lastName
+    session.image = data.image
     await session.save()
     return data
 
