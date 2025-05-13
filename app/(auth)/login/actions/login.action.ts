@@ -1,0 +1,27 @@
+"use server"
+
+import { getSession } from "@/lib/session"
+import { loginSchema } from "@/lib/validation"
+import { z } from "zod"
+
+export const loginAction = async (formData: z.infer<typeof loginSchema>) => {
+    console.log("login action")
+ const res = await fetch("https://dummyjson.com/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(formData),
+    })
+
+    if (!res.ok) {
+      const errorData = await res.json()
+      console.error("Login error from DummyJSON:", errorData)
+      throw new Error("Invalid credentials")
+    }
+
+    const data = await res.json()
+    const session = await getSession()
+    session.token = data.accessToken
+    await session.save()
+    return data
+
+}
