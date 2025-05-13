@@ -1,8 +1,8 @@
-"use client"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Button } from "@/components/ui/button"
+"use client";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -10,18 +10,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { loginSchema } from "@/lib/validation"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
-import { loginAction } from "./actions/login.action"
-import { EyeIcon, EyeOffIcon } from "lucide-react"
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { loginSchema } from "@/lib/validation";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { loginAction } from "./actions/login.action";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 const LoginPage = () => {
-  const router = useRouter()
-  const [error, setError] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
+  const router = useRouter();
+  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -29,37 +29,44 @@ const LoginPage = () => {
       username: "",
       password: "",
     },
-  })
+  });
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
-    setError("")
+    setError("");
     try {
-      const response = await loginAction(values)
+      const response = await loginAction(values);
       if (response.accessToken) {
-        router.push("/dashboard")
+        router.push("/dashboard");
       }
     } catch (err) {
-      setError("Something went wrong")
+      setError("Something went wrong");
     }
-  }
+  };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-amber-50 p-4">
-      <div className="flex flex-col items-center justify-center w-full max-w-md px-8 pt-6 pb-8  rounded-lg shadow-lg bg-white">
-        <h1 className="text-2xl font-bold">Login</h1>
-        <p className="text-sm text-gray-500 p-4">
-          Please enter your credentials
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-stone-50 via-stone-100 to-stone-200 p-4">
+      <div className="flex flex-col items-center justify-center w-full max-w-md px-8 pt-8 pb-8 rounded-2xl shadow-xl bg-white/90 backdrop-blur-sm border border-stone-200">
+        <h1 className="text-3xl font-bold text-stone-800 mb-2">Welcome Back</h1>
+        <p className="text-sm text-stone-600 mb-6">
+          Please enter your credentials to continue
         </p>
-        {error && <div className="mb-4 text-red-500">{error}</div>}
+        {error && (
+          <div className="w-full p-3 mb-4 text-sm text-red-500 bg-red-50/50 rounded-lg border border-red-100">
+            {error}
+          </div>
+        )}
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="w-full space-y-6"
+          >
             <FormField
               control={form.control}
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel className="text-stone-700">Username</FormLabel>
                   <FormControl>
                     <Input placeholder="johnDoe" {...field} />
                   </FormControl>
@@ -72,7 +79,7 @@ const LoginPage = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Password</FormLabel>
+                  <FormLabel className="text-stone-700">Password</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Input
@@ -83,7 +90,7 @@ const LoginPage = () => {
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-500 hover:text-stone-700"
                         tabIndex={-1}
                       >
                         {showPassword ? (
@@ -98,14 +105,16 @@ const LoginPage = () => {
                 </FormItem>
               )}
             />
-            <div className="flex flex-col items-center ">
-              <Button type="submit">Login</Button>
+            <div className="flex flex-col items-center">
+              <Button type="submit" className="w-full">
+                Login
+              </Button>
             </div>
           </form>
         </Form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginPage
+export default LoginPage;

@@ -1,11 +1,11 @@
-"use server"
+"use server";
 
-import { getSession } from "@/lib/session"
+import { getSession } from "@/lib/session";
 
 export const logoutAction = async () => {
-  const session = await getSession()
+  const session = await getSession();
   //session.token = undefined
-  session.destroy()
-  await session.save()
-  return null
-}
+  session.destroy();
+  await session.save();
+  return null;
+};
