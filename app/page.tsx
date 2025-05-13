@@ -1,12 +1,13 @@
+import React from 'react'
 
-
-export default function Home() {
+const page = () => {
   return (
-    <div className="flex flex-col items-center ">
-
-      hello
-
+    <div>
+      redirecting to login page...
+     
+       
     </div>
-   
   )
 }
+
+export default page

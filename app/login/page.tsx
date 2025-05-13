@@ -15,7 +15,6 @@ import { Input } from "@/components/ui/input"
 import { loginSchema } from "@/lib/validation"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-import Link from "next/link"
 import { loginAction } from "./actions/login.action"
 import { EyeIcon, EyeOffIcon } from "lucide-react"
 
@@ -46,7 +45,7 @@ const LoginPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-amber-50 p-4">
-      <div className="flex flex-col items-center justify-center w-full max-w-md px-8 pt-6 pb-8 bg-white rounded-lg shadow-md">
+      <div className="flex flex-col items-center justify-center w-full max-w-md px-8 pt-6 pb-8  rounded-lg shadow-lg bg-white">
         <h1 className="text-2xl font-bold">Login</h1>
         <p className="text-sm text-gray-500 p-4">
           Please enter your credentials
@@ -99,7 +98,7 @@ const LoginPage = () => {
                 </FormItem>
               )}
             />
-            <div className="flex flex-row items-center justify-between">
+            <div className="flex flex-col items-center ">
               <Button type="submit">Login</Button>
             </div>
           </form>
