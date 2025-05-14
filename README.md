@@ -11,6 +11,8 @@ A simple authentication demo built with Next.js, Iron-Session, and DummyJSON API
 - 🎯 Form validation (Zod)
 
 ## 🔑 Test User
+<img width="795" alt="image" src="https://github.com/user-attachments/assets/9fb56670-62d3-4239-8d55-fd415fdbe294" />
+
 
 ```
 (from dummy.json)
