@@ -35,7 +35,7 @@ const LoginPage = () => {
     setError("");
     try {
       const response = await loginAction(values);
-      if (response.accessToken) {
+      if (response.success) {
         router.push("/dashboard");
       }
     } catch (err) {

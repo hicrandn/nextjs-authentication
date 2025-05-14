@@ -15,7 +15,8 @@ export const loginAction = async (formData: z.infer<typeof loginSchema>) => {
     if (!res.ok) {
       const errorData = await res.json()
       console.error("Login error from DummyJSON:", errorData)
-      throw new Error("Invalid credentials")
+      return {
+        success: false,}
     }
 
     const data = await res.json()
@@ -26,6 +27,8 @@ export const loginAction = async (formData: z.infer<typeof loginSchema>) => {
     session.lastName = data.lastName
     session.image = data.image
     await session.save()
-    return data
+    return {
+      success: true,
+    }
 
 }
